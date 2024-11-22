@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Wait for Deployment
         run: |
-          sleep 30
+          sleep 1
 
       - name: Download JSON File from Server101
         run: |
