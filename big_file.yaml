@@ -1,0 +1,57 @@
+library:
+  name: Downtown Public Library
+  location: 123 Main Street, Springfield
+  contact:
+    phone: "555-123-4567"
+    email: contact@downtownlibrary.org
+  sections:
+    - section_name: Fiction
+      genres:
+        - name: Mystery
+          popular_books:
+            - title: "The Hound of the Baskervilles"
+              author: "Arthur Conan Doyle"
+            - title: "Gone Girl"
+              author: "Gillian Flynn"
+        - name: Science Fiction
+          popular_books:
+            - title: "Dune"
+              author: "Frank Herbert"
+            - title: "Neuromancer"
+              author: "William Gibson"
+    - section_name: Non-Fiction
+      genres:
+        - name: History
+          popular_books:
+            - title: "The Wright Brothers"
+              author: "David McCullough"
+            - title: "Sapiens: A Brief History of Humankind"
+              author: "Yuval Noah Harari"
+        - name: Self-Help
+          popular_books:
+            - title: "Atomic Habits"
+              author: "James Clear"
+            - title: "The Power of Now"
+              author: "Eckhart Tolle"
+---
+users:
+  - id: 1
+    name: Alice Johnson
+    email: alice.johnson@example.com
+    age: 28
+    active: true
+    preferences:
+      theme: dark
+      notifications:
+        email: true
+        sms: false
+  - id: 2
+    name: Bob Smith
+    email: bob.smith@example.com
+    age: 34
+    active: false
+    preferences:
+      theme: light
+      notifications:
+        email: false
+        sms: true

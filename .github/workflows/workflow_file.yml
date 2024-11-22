@@ -1,0 +1,59 @@
+name: Update big file
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-repo-b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Deployment
+        run: |
+          sleep 30
+
+      - name: Download JSON File from Server101
+        run: |
+          curl -o latest.json https://thewrightmatt.github.io/silver-spork/sample.json
+
+      - name: Convert JSON to YAML
+        run: |
+          pip install yq
+          yq eval -P '.' latest.json > latest.yaml
+
+      - name: Checkout Repo B
+        uses: actions/checkout@v3
+        with:
+          repository: your-username/repo-b
+          token: ${{ secrets.PAT_FOR_REPO_B }}
+          path: repo-b
+
+      - name: Update YAML File in Repo B
+        run: |
+          cd repo-b
+          python ../update_yaml.py largefile.yaml ../latest.yaml
+
+      - name: Configure Git
+        run: |
+          cd repo-b
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+
+      - name: Check for Changes
+        id: check
+        run: |
+          cd repo-b
+          git add largefile.yaml
+          git diff --cached --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.PAT_FOR_REPO_B }}
+          commit-message: 'Update YAML file from Repo A release ${{ github.event.release.tag_name }}'
+          branch: 'update-yaml-${{ github.event.release.tag_name }}'
+          base: main
+          path: 'repo-b'
+          title: 'Update YAML from Repo A release ${{ github.event.release.tag_name }}'
+          body: |
+            This PR updates the YAML file with changes from Repo A release ${{ github.event.release.tag_name }}.
