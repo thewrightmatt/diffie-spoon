@@ -1,0 +1,13 @@
+name: Remote Dispatch
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [release, other]
+  
+jobs:
+  it-works:
+    runs-on: ubuntu-latest
+    steps:
+    - name: It Works
+      run: echo "It works"
