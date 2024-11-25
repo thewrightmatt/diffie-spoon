@@ -91,4 +91,4 @@ jobs:
           commit-message: Update file from URL
           body: Change detected, trying update
           add-paths: |
-            '$FILE_PATH'
+            big_file.yaml
