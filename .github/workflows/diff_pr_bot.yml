@@ -43,6 +43,8 @@ jobs:
           pwd
           ls
           cat "$FILE_PATH"
+          echo "************************************"
+          echo "************************************"
           cat downloaded_file.yaml
 
       - name: Compare Files
