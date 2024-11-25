@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   update-file:
-    runs-on: ubuntu-latest
+    runs-on: evolent-ubuntu-latest
     env:
       FILE_URL: 'https://thewrightmatt.github.io/silver-spork/sample.json' # Replace with your JSON file URL
       FILE_PATH: './big_file.yaml'              # Replace with your YAML file path in the repo
@@ -82,11 +82,15 @@ jobs:
           cat part2.yaml >> combined.yaml
           mv combined.yaml big_file.yaml
 
+      - name: Get Date
+        run: |
+          echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
       - name: Create Pull Request
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: file-update
+          branch: informa-api-update-${{ env.DATE }}
           title: Update file from URL
           commit-message: Update file from URL
           body: Change detected, trying update
