@@ -2,6 +2,9 @@ name: Update File from URL
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   update-file:
@@ -26,6 +29,12 @@ jobs:
       - name: Convert JSON to YAML
         run: |
           yq eval -P downloaded_file.json > downloaded_file.yaml
+
+      - name: Print contents of file
+        run: |
+          pwd
+          ls
+          cat "$FILE_PATH"
 
       - name: Compare Files
         id: compare
