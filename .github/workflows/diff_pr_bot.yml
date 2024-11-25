@@ -72,7 +72,7 @@ jobs:
       - name: Update File in Repository
         if: steps.compare.outputs.files_different == 'true'
         run: |
-          cp downloaded_file.yaml "part2.yaml"
+          cp downloaded_file.yaml part2.yaml
 
       # Combine the parts back together
       - name: Combine YAML files
@@ -80,8 +80,7 @@ jobs:
           cat part1.yaml > combined.yaml
           echo "---" >> combined.yaml
           cat part2.yaml >> combined.yaml
-          mv combined.yaml /path/to/your/final_combined.yaml
-          echo "Combined file created: /path/to/your/final_combined.yaml"
+          mv combined.yaml big_file.yaml
 
       - name: Create Pull Request
         if: steps.compare.outputs.files_different == 'true'
@@ -92,4 +91,4 @@ jobs:
           commit-message: Update file from URL
           body: Change detected, trying update
           add-paths: |
-            *.yaml
+            big_file.yaml
