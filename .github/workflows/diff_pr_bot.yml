@@ -43,7 +43,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.compare.outputs.files_different == 'true'
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           branch: update-file-{{date('YYYYMMDDHHmmss')}}
           title: 'Update file from URL'
