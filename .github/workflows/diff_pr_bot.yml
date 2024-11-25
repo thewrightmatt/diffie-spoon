@@ -58,7 +58,7 @@ jobs:
       - name: Compare Files
         id: compare
         run: |
-          if ! cmp -s downloaded_file.yaml part2.yaml"; then
+          if ! cmp -s downloaded_file.yaml part2.yaml; then
             echo "files_different=true" >> $GITHUB_OUTPUT
           else
             echo "files_different=false" >> $GITHUB_OUTPUT
