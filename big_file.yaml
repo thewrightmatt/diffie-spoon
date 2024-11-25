@@ -36,9 +36,9 @@ library:
 ---
 users:
   - id: 1
-    name: Bill Jenkins
-    email: bill.jenkins@example.com
-    age: 77
+    name: Alice Johnson
+    email: alice.johnson@example.com
+    age: 28
     active: true
     preferences:
       theme: dark
@@ -54,4 +54,14 @@ users:
       theme: light
       notifications:
         email: false
+        sms: true
+  - id: 3
+    name: Jean Grey
+    email: jgrey@example.com
+    age: 55
+    active: false
+    preferences:
+      theme: light
+      notifications:
+        email: true
         sms: true
