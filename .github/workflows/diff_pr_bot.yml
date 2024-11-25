@@ -43,6 +43,7 @@ jobs:
           pwd
           ls
           cat "$FILE_PATH"
+          cat downloaded_file.yaml
 
       - name: Compare Files
         id: compare
@@ -72,4 +73,4 @@ jobs:
           commit-message: Update file from URL
           body: Change detected, trying update
           add-paths: |
-            $FILE_PATH
+            "big_file.yaml"
