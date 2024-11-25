@@ -17,6 +17,10 @@ jobs:
       FILE_URL: 'https://thewrightmatt.github.io/silver-spork/sample.json' # Replace with your JSON file URL
       FILE_PATH: './big_file.yaml'              # Replace with your YAML file path in the repo
 
+    permissions:
+      contents: write
+      pull-requests: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -63,7 +67,7 @@ jobs:
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: change-branch
+          branch: change-branch-2
           title: 'Update file from URL'
           commit-message: 'Update file from URL'
           body: |
