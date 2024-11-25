@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   update-file:
-    runs-on: evolent-ubuntu-latest
+    runs-on: ubuntu-latest
     env:
       FILE_URL: 'https://thewrightmatt.github.io/silver-spork/sample.json' # Replace with your JSON file URL
       FILE_PATH: './big_file.yaml'              # Replace with your YAML file path in the repo
