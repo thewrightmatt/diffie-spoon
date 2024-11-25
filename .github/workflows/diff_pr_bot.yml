@@ -90,8 +90,8 @@ jobs:
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: informa-api-update-${{ env.DATE }}
-          title: Update file from URL
+          branch: file-update-${{ env.DATE }}
+          title: Update file ${{ env.DATE }}
           commit-message: Update file from URL
           body: Change detected, trying update
           add-paths: |
