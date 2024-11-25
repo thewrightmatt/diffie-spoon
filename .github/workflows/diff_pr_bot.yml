@@ -1,0 +1,55 @@
+name: Update File from URL
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+    env:
+      FILE_URL: 'https://thewrightmatt.github.io/silver-spork/sample.json' # Replace with your JSON file URL
+      FILE_PATH: './big_file.yaml'              # Replace with your YAML file path in the repo
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download JSON File from URL
+        run: |
+          curl -sSL "$FILE_URL" -o downloaded_file.json
+
+      - name: Install yq (YAML Processor)
+        run: |
+          sudo wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64 -O /usr/local/bin/yq
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Convert JSON to YAML
+        run: |
+          yq eval -P downloaded_file.json > downloaded_file.yaml
+
+      - name: Compare Files
+        id: compare
+        run: |
+          if ! cmp -s downloaded_file.yaml "$FILE_PATH"; then
+            echo "files_different=true" >> $GITHUB_OUTPUT
+          else
+            echo "files_different=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update File in Repository
+        if: steps.compare.outputs.files_different == 'true'
+        run: |
+          cp downloaded_file.yaml "$FILE_PATH"
+
+      - name: Create Pull Request
+        if: steps.compare.outputs.files_different == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: update-file-{{date('YYYYMMDDHHmmss')}}
+          title: 'Update file from URL'
+          commit-message: 'Update file from URL'
+          body: |
+            This pull request updates the YAML file with the latest content converted from the JSON file at the specified URL.
+          labels: 'auto-update'
+          paths: |
+            $FILE_PATH
