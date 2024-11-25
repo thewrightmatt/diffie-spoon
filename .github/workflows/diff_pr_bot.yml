@@ -86,9 +86,9 @@ jobs:
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: file-update-{{date('YYYYMMDDHHmmss')}}
+          branch: file-update
           title: Update file from URL
           commit-message: Update file from URL
           body: Change detected, trying update
           add-paths: |
-            $FILE_PATH
+            '$FILE_PATH'
