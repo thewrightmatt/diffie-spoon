@@ -63,7 +63,7 @@ jobs:
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: update-file-test
+          branch: change-branch
           title: 'Update file from URL'
           commit-message: 'Update file from URL'
           body: |
