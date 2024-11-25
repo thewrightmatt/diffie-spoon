@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download JSON File from URL
         run: |
@@ -67,11 +67,9 @@ jobs:
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: change-branch-2
-          title: 'Update file from URL'
-          commit-message: 'Update file from URL'
-          body: |
-            This pull request updates the YAML file with the latest content converted from the JSON file at the specified URL.
-          labels: 'auto-update'
+          branch: file-update
+          title: Update file from URL
+          commit-message: Update file from URL
+          body: Change detected, trying update
           add-paths: |
             $FILE_PATH
