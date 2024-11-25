@@ -34,6 +34,15 @@ jobs:
           sudo wget https://github.com/mikefarah/yq/releases/download/v4.35.1/yq_linux_amd64 -O /usr/local/bin/yq
           sudo chmod +x /usr/local/bin/yq
 
+      # Split the file into parts at '---'
+      - name: Split YAML file
+        run: |
+          csplit --elide-empty-files --quiet --prefix=split_file "$FILE_PATH" "/^---$/" "{*}"
+          mv split_file00 part1.yaml
+          mv split_file01 part2.yaml
+          echo "Split files created:"
+          ls -l part*.yaml
+
       - name: Convert JSON to YAML
         run: |
           yq eval -Poy downloaded_file.json > downloaded_file.yaml
@@ -41,7 +50,6 @@ jobs:
       - name: Print contents of file
         run: |
           pwd
-          ls
           cat "$FILE_PATH"
           echo "************************************"
           echo "************************************"
@@ -50,7 +58,7 @@ jobs:
       - name: Compare Files
         id: compare
         run: |
-          if ! cmp -s downloaded_file.yaml "$FILE_PATH"; then
+          if ! cmp -s downloaded_file.yaml part2.yaml"; then
             echo "files_different=true" >> $GITHUB_OUTPUT
           else
             echo "files_different=false" >> $GITHUB_OUTPUT
@@ -64,7 +72,16 @@ jobs:
       - name: Update File in Repository
         if: steps.compare.outputs.files_different == 'true'
         run: |
-          cp downloaded_file.yaml "$FILE_PATH"
+          cp downloaded_file.yaml "part2.yaml"
+
+      # Combine the parts back together
+      - name: Combine YAML files
+        run: |
+          cat part1.yaml > combined.yaml
+          echo "---" >> combined.yaml
+          cat part2.yaml >> combined.yaml
+          mv combined.yaml /path/to/your/final_combined.yaml
+          echo "Combined file created: /path/to/your/final_combined.yaml"
 
       - name: Create Pull Request
         if: steps.compare.outputs.files_different == 'true'
