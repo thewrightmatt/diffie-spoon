@@ -60,5 +60,5 @@ jobs:
           body: |
             This pull request updates the YAML file with the latest content converted from the JSON file at the specified URL.
           labels: 'auto-update'
-          paths: |
+          add-paths: |
             $FILE_PATH
