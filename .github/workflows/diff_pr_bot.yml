@@ -45,6 +45,11 @@ jobs:
             echo "files_different=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Debug Output
+        run: |
+          echo "files_different is: ${{ steps.compare.outputs.files_different }}"
+          echo "GITHUB_OUTPUT path is: $GITHUB_OUTPUT"
+
       - name: Update File in Repository
         if: steps.compare.outputs.files_different == 'true'
         run: |
@@ -54,7 +59,7 @@ jobs:
         if: steps.compare.outputs.files_different == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: update-file-{{date('YYYYMMDDHHmmss')}}
+          branch: update-file-test
           title: 'Update file from URL'
           commit-message: 'Update file from URL'
           body: |
