@@ -48,7 +48,7 @@ jobs:
       - name: Debug Output
         run: |
           echo "files_different is: ${{ steps.compare.outputs.files_different }}"
-          echo "GITHUB_OUTPUT path is: $GITHUB_OUTPUT"
+          echo "GITHUB_OUTPUT path is: $GITHUB_OUTPUT" #testing
 
       - name: Update File in Repository
         if: steps.compare.outputs.files_different == 'true'
